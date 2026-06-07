@@ -1,6 +1,5 @@
 from datetime import datetime
 import os
-import requests
 
 def generate_log(data):
     """Generate a log file with timestamped entries."""
@@ -33,12 +32,16 @@ def generate_log(data):
 def fetch_data():
     """Fetch data from a public API using requests."""
     try:
+        import requests
         response = requests.get("https://jsonplaceholder.typicode.com/posts/1")
         if response.status_code == 200:
             return response.json()
         else:
             print(f"Error: API returned status code {response.status_code}")
             return {}
+    except ImportError:
+        print("Error: requests library not installed. Install with: pip install requests")
+        return {}
     except requests.RequestException as e:
         print(f"Error fetching data: {e}")
         return {}
